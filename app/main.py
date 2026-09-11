@@ -26,5 +26,8 @@ def move_file(command: str) -> None:
     if destination_dir:
         os.makedirs(destination_dir, exist_ok=True)
 
+    if not os.path.isfile(source):
+        raise ValueError("Source must be a file, not a directory")
+
     shutil.copy2(source, destination)
     os.remove(source)
