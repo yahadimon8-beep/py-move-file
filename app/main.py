@@ -18,6 +18,9 @@ def move_file(command: str) -> None:
             f"Source file '{source}' does not exist."
         )
 
+    if not os.path.isfile(source):
+        raise ValueError("Source must be a file, not a directory")
+
     if destination.endswith("/"):
         destination = os.path.join(destination, os.path.basename(source))
 
@@ -25,9 +28,6 @@ def move_file(command: str) -> None:
 
     if destination_dir:
         os.makedirs(destination_dir, exist_ok=True)
-
-    if not os.path.isfile(source):
-        raise ValueError("Source must be a file, not a directory")
 
     shutil.copy2(source, destination)
     os.remove(source)
